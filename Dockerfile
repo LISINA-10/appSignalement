@@ -1,6 +1,5 @@
 FROM openjdk:17
-WORKDIR /app
-ARG JAR_FILE=target/appSignalement.jar
-COPY ${JAR_FILE} app.jar
+VolUME /tmp
+ADD target/appSignalement.jar appSignalement.jar
 EXPOSE 8081
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "appSignalement.jar"]
