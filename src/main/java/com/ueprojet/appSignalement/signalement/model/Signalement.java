@@ -1,5 +1,7 @@
 package com.ueprojet.appSignalement.signalement.model;
 
+import java.time.LocalDateTime;
+
 import com.ueprojet.appSignalement.signalement.enumeration.Status;
 
 import jakarta.persistence.Entity;
@@ -24,6 +26,7 @@ public class Signalement {
     private long arrondissementId;
     private Long userId;
     private Long problemeId;
+    private LocalDateTime date;
 
     
 }

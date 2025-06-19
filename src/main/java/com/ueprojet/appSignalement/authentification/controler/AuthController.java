@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ueprojet.appSignalement.authentification.AuthResponse;
 import com.ueprojet.appSignalement.authentification.JwtUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -94,7 +95,7 @@ public class AuthController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User type not recognized");
             }
 
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(new AuthResponse(token));
 
            
         } catch (BadCredentialsException e) {

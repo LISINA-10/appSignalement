@@ -1,0 +1,329 @@
+{
+    "info": {
+        "_postman_id": "signalement-collection-corrected",
+        "name": "Signalement App - JWT Secured",
+        "description": "Collection Postman pour l'application Spring Boot s\u00e9curis\u00e9e avec Spring Security et JWT",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Register Admin",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"adminpassword\",\n    \"role\": \"ADMIN\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8081/api/auth/register",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8081",
+                    "path": [
+                        "api",
+                        "auth",
+                        "register"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Register Citizen",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"citizen\",\n    \"password\": \"citizenpassword\",\n    \"email\": \"citizen@gmail.com\",\n    \"arrondissementId\": 1,\n    \"role\": \"CITIZEN\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8081/api/auth/register/citizen",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8081",
+                    "path": [
+                        "api",
+                        "auth",
+                        "register",
+                        "citizen"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Register Agent",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"agent\",\n    \"password\": \"agentpassword\",\n    \"arrondissementId\": 1,\n    \"role\": \"AGENT\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8081/api/auth/register/agent",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8081",
+                    "path": [
+                        "api",
+                        "auth",
+                        "register",
+                        "agent"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Login",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "var jsonData = pm.response.json();",
+                            "pm.collectionVariables.set(\"jwt\", jsonData);"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"adminpassword\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8081/api/auth/login",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8081",
+                    "path": [
+                        "api",
+                        "auth",
+                        "login"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Get All Users",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwt}}"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8081/api/users/getUsers",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8081",
+                    "path": [
+                        "api",
+                        "users",
+                        "getUsers"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Cr\u00e9er un Arrondissement",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwt}}"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Commune de Yaound\\u00e9 I\",\n    \"departement\": \"Mfoundi\",\n    \"region\": \"Centre\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8081/api/arrondissements/create/arrondissement",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8081",
+                    "path": [
+                        "api",
+                        "arrondissements",
+                        "create",
+                        "arrondissement"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Lister les Arrondissements",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwt}}"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8081/api/arrondissements/getAllArrondissements",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8081",
+                    "path": [
+                        "api",
+                        "arrondissements",
+                        "getAllArrondissements"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Cr\u00e9er un Signalement",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwt}}"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"description\": \"Poubelle non ramass\\u00e9e\",\n    \"status\": \"EN_ATTENTE\",\n    \"imageUrl\": \"image.jpg\",\n    \"latitude\": 3.848,\n    \"longitude\": 11.502,\n    \"arrondissementId\": 1,\n    \"userId\": 2,\n    \"problemeId\": 1,\n    \"date\": \"2025-06-05T10:00:00\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8081/api/signalements/create",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8081",
+                    "path": [
+                        "api",
+                        "signalements",
+                        "create"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Envoyer Notification \u00e0 un Citoyen",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwt}}"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8081/notifications/citoyen/2?arrondissementId=1&titre=Alerte&contenu=Ramassage demain",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8081",
+                    "path": [
+                        "notifications",
+                        "citoyen",
+                        "2"
+                    ],
+                    "query": [
+                        {
+                            "key": "arrondissementId",
+                            "value": "1"
+                        },
+                        {
+                            "key": "titre",
+                            "value": "Alerte"
+                        },
+                        {
+                            "key": "contenu",
+                            "value": "Ramassage demain"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Cr\u00e9er un Probl\u00e8me",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwt}}"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Voirie d\\u00e9grad\\u00e9e\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8081/api/problemes/create",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8081",
+                    "path": [
+                        "api",
+                        "problemes",
+                        "create"
+                    ]
+                }
+            }
+        }
+    ]
+}

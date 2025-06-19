@@ -1,5 +1,7 @@
 package com.ueprojet.appSignalement.usersmanagement.model;
 
+import java.time.LocalDate;
+
 import com.ueprojet.appSignalement.usersmanagement.enumeration.Role;
 
 import jakarta.persistence.DiscriminatorColumn;
@@ -22,9 +24,10 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String username;
     private String password;
+    private LocalDate dateDeCreation;
 
     @Enumerated(EnumType.STRING)
     private Role role;

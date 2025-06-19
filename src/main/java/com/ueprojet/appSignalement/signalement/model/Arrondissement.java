@@ -1,6 +1,11 @@
 package com.ueprojet.appSignalement.signalement.model;
 
+import com.ueprojet.appSignalement.signalement.enumeration.ArrondissementStatus;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,5 +22,7 @@ public class Arrondissement {
     private String departement;
     private String region;
 
-    
+    @Enumerated(EnumType.STRING)
+    private ArrondissementStatus statut;
+
 }

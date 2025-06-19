@@ -1,5 +1,6 @@
 package com.ueprojet.appSignalement.usersmanagement.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class UsersService {
             throw new IllegalArgumentException("Username is already taken: " + user.getUsername());
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setDateDeCreation(LocalDate.now());
     
         return userRepository.save(user);
     }
@@ -59,6 +61,50 @@ public Citizen registerCitizen(Citizen citizen) {
     public void deleteAllUsers(){
         userRepository.deleteAll();
     }
+
+    public Users getUserById(Long id){
+      return  userRepository.findById(id).orElseThrow();
+    }
+
+    public void changePassword(Long userId, String oldPassword, String newPassword) {
+        Users user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Utilisateur non trouvé"));
+
+        // Vérifier le mot de passe actuel
+        if (!user.getPassword().equals(oldPassword)) {
+            throw new IllegalArgumentException("Le mot de passe actuel est incorrect");
+        }
+
+        // Mettre à jour le mot de passe
+        user.setPassword(newPassword);
+        userRepository.save(user);
+    }
+
+     public void changeEmail(Long userId, String oldEmail, String newEmail) {
+        Citizen user =( Citizen) userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Utilisateur non trouvé"));
+
+        // Vérifier le mot de passe actuel
+        if (!user.getPassword().equals(oldEmail)) {
+            throw new IllegalArgumentException("Le mot de passe actuel est incorrect");
+        }
+
+        // Mettre à jour le mot de passe
+        user.setEmail(newEmail);
+        userRepository.save(user);
+    }
+
+    public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new IllegalArgumentException("User not found with id: " + id);
+        }
+        userRepository.deleteById(id);
+    }
+
+    public List<Users> getUsersByRole(Role role) {
+        return userRepository.findByRole(role);
+    }
+
+
+
 
 
     
