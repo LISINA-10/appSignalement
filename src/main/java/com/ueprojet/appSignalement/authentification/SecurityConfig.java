@@ -44,7 +44,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable()) // Utilisation de la nouvelle syntaxe
+            
             .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Autoriser les requêtes OPTIONS
                 .requestMatchers("api/auth/**").permitAll() // Pour Spring Security 5.4+
                 .requestMatchers(HttpMethod.POST, "/api/users/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/users/**").hasRole("ADMIN")
@@ -65,12 +67,15 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/notifications/**").hasRole("AGENT")
                 .requestMatchers(HttpMethod.GET, "/api/citoyen/stats/**").hasRole("CITIZEN")
                 .requestMatchers(HttpMethod.GET, "/api/stats/agent/**").hasRole("AGENT")
-                .requestMatchers(HttpMethod.GET, "/api/stats/admin/**").hasRole("ADMIN") 
+                .requestMatchers(HttpMethod.GET, "/api/stats/admin/**").hasRole("ADMIN")
+                .requestMatchers("/h2-console/**").permitAll() // Permettre l'accès à la console H2) 
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            );
+            )
+            .headers(headers -> headers
+                .frameOptions().sameOrigin()); // Permettre l'affichage de la console H2
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build(); // Nécessaire pour retourner le SecurityFilterChain

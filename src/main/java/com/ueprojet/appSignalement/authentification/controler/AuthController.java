@@ -42,7 +42,8 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Users user) {
         try {
-            Users savedUser = userService.registerUser(user);
+            Role role = Role.ADMIN;
+            Users savedUser = userService.registerUser(user , role);
             return ResponseEntity.ok(savedUser);
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
@@ -52,7 +53,8 @@ public class AuthController {
     @PostMapping("/register/citizen")
     public ResponseEntity<?> registerCitizen(@RequestBody Citizen user) {
         try {
-            Users savedUser = userService.registerUser(user);
+            Role role = Role.CITIZEN;
+            Users savedUser = userService.registerUser(user, role);
             return ResponseEntity.ok(savedUser);
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
@@ -62,7 +64,8 @@ public class AuthController {
     @PostMapping("/register/agent")
     public ResponseEntity<?> registerAgent(@RequestBody Agent user) {
         try {
-            Users savedUser = userService.registerUser(user);
+            Role role = Role.AGENT;
+            Users savedUser = userService.registerUser(user,role);
             return ResponseEntity.ok(savedUser);
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
@@ -94,11 +97,13 @@ public class AuthController {
             else{
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User type not recognized");
             }
+            System.out.println("User authenticated successfully: " + authenticatedUser.getUsername());
 
             return ResponseEntity.ok(new AuthResponse(token));
 
            
         } catch (BadCredentialsException e) {
+            System.out.println("Invalid username or password: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
     }

@@ -22,13 +22,23 @@ public class UsersService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Users registerUser(Users user) {
+    public Users registerUser(Users user, Role role) {
 
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new IllegalArgumentException("Username is already taken: " + user.getUsername());
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setDateDeCreation(LocalDate.now());
+        if (role == Role.AGENT){
+            user.setRole(Role.AGENT);
+        } else if (role == Role.CITIZEN) {
+            user.setRole(Role.CITIZEN);
+        } else if (role == Role.ADMIN) {
+            user.setRole(Role.ADMIN);
+        }
+        else {
+            throw new IllegalArgumentException("Invalid role specified: " + role);
+        }
     
         return userRepository.save(user);
     }
@@ -38,6 +48,8 @@ public class UsersService {
         throw new IllegalArgumentException("Username is already taken: " + agent.getUsername());
     }
     agent.setPassword(passwordEncoder.encode(agent.getPassword()));
+    agent.setDateDeCreation(LocalDate.now());
+    agent.setRole(Role.AGENT);
     
     return userRepository.save(agent);
 }
@@ -47,6 +59,7 @@ public Citizen registerCitizen(Citizen citizen) {
         throw new IllegalArgumentException("Username is already taken: " + citizen.getUsername());
     }
     citizen.setPassword(passwordEncoder.encode(citizen.getPassword()));
+    citizen.setDateDeCreation(LocalDate.now());
     if(citizen.getRole() == null){
         citizen.setRole(Role.CITIZEN);
     }

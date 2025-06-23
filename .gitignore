@@ -34,8 +34,8 @@ build/
 .vscode/
 
 # Ignorer les fichiers de compilation et les dépendances
-target/
-*.jar
+#target/
+#*.jar
 *.war
 *.class
 

@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import com.ueprojet.appSignalement.signalement.enumeration.Status;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,7 +21,10 @@ public class Signalement {
     private Long id;
     
     private String description;
+
+    
     private Status status;
+
     private String imageUrl;
     private double latitude;
     private double longitude;

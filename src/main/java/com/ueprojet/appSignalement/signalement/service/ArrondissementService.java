@@ -19,10 +19,10 @@ public class ArrondissementService {
     @Autowired
     NotificationService notificationService;
 
-    public void save(Arrondissement arrondissement){
+    public Arrondissement save(Arrondissement arrondissement){
         System.out.println("ARR: " + arrondissement);
         arrondissement.setStatut(ArrondissementStatus.ACTIF);
-        arrondissementRepository.save(arrondissement);
+         return arrondissementRepository.save(arrondissement);
     }
 
     public List<Arrondissement> getAllArrondissements() {

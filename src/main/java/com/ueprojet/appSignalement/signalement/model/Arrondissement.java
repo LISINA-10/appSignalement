@@ -19,10 +19,14 @@ public class Arrondissement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String departement;
+    private String country;
     private String region;
 
     @Enumerated(EnumType.STRING)
     private ArrondissementStatus statut;
+
+    private Double area;
+
+    private String geo; // Utilisez un type approprié pour les coordonnées
 
 }
